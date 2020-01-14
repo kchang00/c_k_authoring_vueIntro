@@ -1,3 +1,4 @@
+// sass --watch sass/main.scss:css/main.css --style compressed
 /* quick reset */
 * { margin: 0; border: 0; padding: 0; }
 
@@ -79,3 +80,7 @@ video { width: 100% }
 }
 
 .show-scroller {display: inline-block !important; }
+
+.u-avatar {
+    max-width: 30px;
+}

@@ -7,6 +7,13 @@ var vm = new Vue({
 
     // mock up the user - this well eventually come from the database UMS (user management system)
 
+    // this is an object
+    user: {
+        // keys and values - describes user
+        isAdmin: true,
+        isLoggedIn: true,
+        avatar: "thor.png"
+    },
 
     // this data would also come from the database, but we'll just mock it up for now
     videodata: [
@@ -19,6 +26,17 @@ var vm = new Vue({
   },
 
   methods: {
+    logInOut() {
+        // test the login/logout UI -> btn should change colour
+        // eventually we'll use routing and a login component
+        console.log('do login / logout on click');
+        // ? : ; = shorthand if statement - known as a ternary statement
+        // evaluate the expression; if true, use value on the left. If false, use value on right
+        this.user.isLoggedIn = (this.user.isLoggedIn) ? false : true;
+    },
 
+    setUserPrefs() {
+        console.log('set user prefs via routing and probably a component');
+    }
   }
 });

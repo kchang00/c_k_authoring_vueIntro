@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
   <link rel="stylesheet" href="css/main.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
   <title>Video with Vue</title>
 </head>
 
@@ -20,26 +19,29 @@
         <ul>
           <!-- avatar / user icon-->
           <!-- if the user has an avatar, show it -->
-          <li>
-            <img src="" alt="user avatar" class="u-avatar">
+          <li v-if="user.avatar">
+            <img :src="'images/' + user.avatar" alt="user avatar" class="u-avatar">
           </li>
 
           <!-- else show this -->
-          <li>
+          <li v-else>
             <i class="fas fa-user"></i>
           </li>
           <!-- end avatar -->
 
           <!-- settings icon / functionality -->
           <!-- if our user object has admin rights, then show this -->
-          <li>
-            <i class="fas fa-cog" role="button"></i>
+          <li v-if="user.isAdmin">
+              <!-- @ = shorthand of v-on -->
+            <i @click="setUserPrefs" class="fas fa-cog" role="button"></i>
           </li>
           <!-- end user settings -->
 
           <!-- log in / log out -->
           <li>
-            <i class="fas fa-power-off u-login" role="button"></i>
+              <!-- logInOut is a function in main.js methods -->
+              <!-- :class -> shorthand binding  -->
+            <i v-on:click="logInOut" class="fas fa-power-off u-login" :class="{ 'logged-in' : user.isLoggedIn}" role="button"></i>
           </li>
         </ul>
       </nav>
@@ -69,8 +71,9 @@
   <footer>
     <p>All content &copy; 2020 Netflix, Marvel and Disney, so don't tell them we stole it</p>
   </footer>
-
-  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
+  <!-- own script should always be at very bottom -->
+  <script defer src="js/main.js"></script>
 </body>
 
 </html>
