@@ -1,22 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Intro to Vue</title>
-</head>
-<body>
-    <main id="app">
-        <h1>{{ message }}</h1>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  <link rel="stylesheet" href="css/main.css">
+  <title>Video with Vue</title>
+</head>
+
+<body>
+  <main id="app">
+    <header>
+      <h1 class="hidden">Video with Vue.js</h1>
+      <nav>
+        <h3 class="app-title">My Awesome Video App</h3>
         <ul>
-            <!-- v-for = foreach -->
-            <li v-for="item in collection">
-                <p @click="logClicked">{{ item.name }} - wow you can put stuff in the middle - {{ item.role }}</p>
-            </li>
+          <!-- avatar / user icon-->
+            <!-- if the user has an avatar, show it -->
+          <li v-if="user.avatar">
+            <img :src="'images/' + user.avatar" alt="user avatar" class="u-avatar">
+            <span v-html="user.uname"></span>
+          </li>
+            <!-- else show this -->
+          <li v-else>
+            <i class="fas fa-user"></i>
+            <span>Sign In</span>
+          </li>
+          <!-- end avatar -->
+
+
+          <!-- settings icon / functionality -->
+          <!-- if our user object has admin rights, then show this -->
+          <li v-if="user.isadmin">
+              <!-- @ = shorthand of v-on -->
+            <i @click="setUserPrefs" class="fas fa-cog" role="button"></i>
+          </li>
+          <!-- end user settings -->
+
+          <!-- log in / log out -->
+          <li>
+              <!-- logInOut is a function in main.js methods -->
+              <!-- :class -> shorthand binding  -->
+            <i v-on:click="logInOut" class="fas fa-power-off u-login" :class="{ 'logged-in' : user.isLoggedIn}" role="button"></i>
+          </li>
         </ul>
-    </main>
-    <script src="js/main.js" type="module"></script>
+      </nav>
+    </header>
+
+    <ul class="video-poster-wrapper">
+        <!-- looping through movies in video data -->
+      <li v-for="movie in videodata">
+        <a :href="movie.vidsource" v-on:click.prevent="loadMovie(movie)">
+            <!-- referencing movie thumb key in videodata -->
+            <img :src="'images/' + movie.thumb" alt="movie poster">
+        </a>
+      </li>
+    </ul>
+
+    <p class="instructions">
+      <i>Click on a poster to preview the movie!</i>
+    </p>
+
+    <!-- hidden movies -->
+    
+    <section class="hidden-movies" :class="{'show-movie' : showDetails}">
+        <!-- binding to different keys -->
+      <h3 class="movie-title">{{ videotitle }}</h3>
+      <video :src="'video/' + videosource" autoplay controls></video>
+      <div class="movie-details">
+        <p>{{ videodescription }}</p>
+      </div>
+    </section>
+
+    <div class="up-arrow"><span>^</span></div>
+  </main>
+
+  <footer>
+    <p>All content &copy; 2020 Netflix, Marvel and Disney, so don't tell them we stole it</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
+  <!-- own script should always be at very bottom -->
+  <script defer src="js/main.js"></script>
 </body>
+
 </html>
